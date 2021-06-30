@@ -1,0 +1,7 @@
+{
+  "name": "nodejs-starter-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tanmay Mishu <tanmaymishu@gmail.com>",
+  "license": "MIT"
+}
