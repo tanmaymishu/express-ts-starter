@@ -3,4 +3,3 @@
 yarn-error.log
 /dist
 /logs
-src/database/knexfile.ts

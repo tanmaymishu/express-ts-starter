@@ -1,11 +1,14 @@
+import dotenv from "dotenv";
 import { Knex } from "knex";
 
+dotenv.config({ path: "../../.env" });
+
 export const development: Knex.Config = {
-  client: "postgresql",
+  client: process.env.DB_CLIENT,
   connection: {
-    database: "my_db",
-    user: "username",
-    password: "password",
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
   },
   pool: {
     min: 2,
@@ -18,11 +21,11 @@ export const development: Knex.Config = {
 };
 
 export const testing: Knex.Config = {
-  client: "postgresql",
+  client: process.env.DB_CLIENT,
   connection: {
-    database: "my_db",
-    user: "username",
-    password: "password",
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
   },
   pool: {
     min: 2,
@@ -35,11 +38,11 @@ export const testing: Knex.Config = {
 };
 
 export const production: Knex.Config = {
-  client: "postgresql",
+  client: process.env.DB_CLIENT,
   connection: {
-    database: "my_db",
-    user: "username",
-    password: "password",
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
   },
   pool: {
     min: 2,
