@@ -1,15 +1,16 @@
 {
   "name": "nodejs-starter-ts",
   "version": "1.0.0",
+  "main": "dist/index.js",
   "author": "Tanmay Mishu <tanmaymishu@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "tsc && node dist/index.js",
     "migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
     "migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
-    "migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
-    "db:config": "cp src/database/knexfile.ts.example src/database/knexfile.ts"
+    "migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
