@@ -3,7 +3,7 @@ import { Knex } from "knex";
 
 dotenv.config({ path: "../../.env" });
 
-export const development: Knex.Config = {
+const knexConfig: Knex.Config = {
   client: process.env.DB_CLIENT,
   connection: {
     database: process.env.DB_DATABASE,
@@ -20,36 +20,4 @@ export const development: Knex.Config = {
   },
 };
 
-export const testing: Knex.Config = {
-  client: process.env.DB_CLIENT,
-  connection: {
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-  },
-  pool: {
-    min: 2,
-    max: 10,
-  },
-  migrations: {
-    tableName: "migrations",
-    directory: "migrations",
-  },
-};
-
-export const production: Knex.Config = {
-  client: process.env.DB_CLIENT,
-  connection: {
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-  },
-  pool: {
-    min: 2,
-    max: 10,
-  },
-  migrations: {
-    tableName: "migrations",
-    directory: "migrations",
-  },
-};
+export default knexConfig;
