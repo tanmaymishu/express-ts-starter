@@ -1,0 +1,52 @@
+import { Knex } from "knex";
+
+export const development: Knex.Config = {
+  client: "postgresql",
+  connection: {
+    database: "my_db",
+    user: "username",
+    password: "password",
+  },
+  pool: {
+    min: 2,
+    max: 10,
+  },
+  migrations: {
+    tableName: "migrations",
+    directory: "migrations",
+  },
+};
+
+export const testing: Knex.Config = {
+  client: "postgresql",
+  connection: {
+    database: "my_db",
+    user: "username",
+    password: "password",
+  },
+  pool: {
+    min: 2,
+    max: 10,
+  },
+  migrations: {
+    tableName: "migrations",
+    directory: "migrations",
+  },
+};
+
+export const production: Knex.Config = {
+  client: "postgresql",
+  connection: {
+    database: "my_db",
+    user: "username",
+    password: "password",
+  },
+  pool: {
+    min: 2,
+    max: 10,
+  },
+  migrations: {
+    tableName: "migrations",
+    directory: "migrations",
+  },
+};
