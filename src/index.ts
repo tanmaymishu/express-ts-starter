@@ -7,7 +7,7 @@ import knexConfig from "./database/knexfile";
 import "./util/passport";
 import "./util/helpers";
 import Logger from "./util/logger";
-import morganMiddleware from "./middleware/morganMiddleware";
+import morganMiddleware from "./middleware/morgan.middleware";
 import { registerRoutes } from "./routes";
 
 // Create an express app.
