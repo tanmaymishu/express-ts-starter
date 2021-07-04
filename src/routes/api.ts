@@ -1,11 +1,9 @@
-import { Express, NextFunction, Request, Response } from "express";
-import passport from "passport";
+import { Router } from "express";
 import * as PingController from "../controllers/ping.controller";
+import authorize from "../middleware/auth.middleware";
 
-export function apiRoutes(app: Express) {
-  app.get(
-    "/ping",
-    passport.authenticate("jwt", { session: false }),
-    PingController.pong
-  );
-}
+const router = Router();
+
+router.get("/ping", authorize, PingController.pong);
+
+export default router;

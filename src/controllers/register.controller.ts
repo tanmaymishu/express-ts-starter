@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { body, check } from "express-validator";
+import { body } from "express-validator";
 import User from "../database/models/User";
 import * as AuthService from "../services/authService";
 
-export const schema = [
-  body("firstName").exists(),
-  body("lastName").exists(),
-  body("password").exists(),
+const rules = [
+  body("firstName", "First name is missing").exists(),
+  body("lastName", "Last name is missing").exists(),
+  body("password", "Password is missing").exists(),
   body("email")
     .exists()
     .bail()
@@ -20,7 +20,9 @@ export const schema = [
     }),
 ];
 
-export async function store(req: Request, res: Response) {
+async function store(req: Request, res: Response) {
   let user = await AuthService.register(req.body);
   return res.status(201).json({ user });
 }
+
+export { rules, store };

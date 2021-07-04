@@ -2,13 +2,13 @@ import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import multer from "multer";
 import knex from "knex";
-import { Model, ForeignKeyViolationError, ValidationError } from "objection";
+import { Model } from "objection";
 import knexConfig from "./database/knexfile";
 import "./util/passport";
 import "./util/helpers";
-import Logger from "./util/logger";
-import morganMiddleware from "./middleware/morgan.middleware";
-import { registerRoutes } from "./routes";
+import logger from "./util/logger";
+import morganLogger from "./middleware/morgan.middleware";
+import routes from "./routes";
 
 // Create an express app.
 const app = express();
@@ -27,10 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(multer().any());
 
 // Log the incoming requests to console.
-app.use(morganMiddleware);
+app.use(morganLogger);
 
-// Register the routes.
-registerRoutes(app);
+// Register and mount the routes.
+app.use("/", routes);
 
 // Catch any error and send it as a json.
 app.use(function (
@@ -40,9 +40,14 @@ app.use(function (
   next: NextFunction
 ) {
   if (error) {
-    Logger.error(error.message);
+    logger.error(error.message);
     return res.status(500).json({ error: error.message });
   }
+});
+
+// Catch 404.
+app.use(function (req: Request, res: Response) {
+  return res.status(404).json({ message: "Page Not Found!" });
 });
 
 // Boot the server.

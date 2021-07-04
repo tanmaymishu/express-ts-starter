@@ -1,19 +1,16 @@
-import { Express } from "express";
+import { Router } from "express";
 import * as RegisterController from "../controllers/register.controller";
 import * as LoginController from "../controllers/login.controller";
-import { validateRequest } from "../middleware/validation.middleware";
+import validate from "../middleware/validation.middleware";
 
-export function authRoutes(app: Express) {
-  app.post(
-    "/register",
-    RegisterController.schema,
-    validateRequest,
-    RegisterController.store
-  );
-  app.post(
-    "/login",
-    LoginController.schema,
-    validateRequest,
-    LoginController.store
-  );
-}
+const router = Router();
+
+router.post(
+  "/register",
+  validate(RegisterController.rules),
+  RegisterController.store
+);
+
+router.post("/login", validate(LoginController.rules), LoginController.store);
+
+export default router;
