@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { body } from "express-validator";
-import * as AuthService from "../services/authService";
+import * as AuthService from "../services/auth.service";
 
 const rules = [body("email").exists(), body("password").exists()];
 

@@ -1,25 +1,31 @@
 import dotenv from "dotenv";
 import { Knex } from "knex";
+import path from "path";
 
-dotenv.config({ path: "../../.env" });
+if (process.env.NODE_ENV == "testing") {
+  dotenv.config({ path: ".env.testing" });
+} else {
+  dotenv.config({ path: "../../.env" });
+}
 
 const knexConfig: Knex.Config = {
-  client: process.env.NODE_ENV == "testing" ? "sqlite3" : process.env.DB_CLIENT,
+  client: process.env.DB_CLIENT,
   connection:
     process.env.NODE_ENV == "testing"
       ? ":memory:"
       : {
-          database: process.env.DB_DATABASE,
-          user: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-        },
+        database: process.env.DB_DATABASE,
+        user: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+      },
+  useNullAsDefault: process.env.NODE_ENV == "testing",
   pool: {
     min: 2,
     max: 10,
   },
   migrations: {
     tableName: "migrations",
-    directory: "migrations",
+    directory: path.join(__dirname, "migrations"),
   },
 };
 

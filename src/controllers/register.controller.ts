@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { body } from "express-validator";
-import User from "../database/models/User";
-import * as AuthService from "../services/authService";
+import User from "../database/models/user";
+import * as AuthService from "../services/auth.service";
 
 const rules = [
   body("firstName", "First name is missing").exists(),

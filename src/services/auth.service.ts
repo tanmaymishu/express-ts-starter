@@ -1,8 +1,8 @@
-import User from "../database/models/User";
+import User from "../database/models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export async function register(body: any) {
+export async function createUser(body: any) {
   let user = await User.query().insert({
     firstName: body.firstName,
     lastName: body.lastName,
@@ -10,14 +10,16 @@ export async function register(body: any) {
     password: bcrypt.hashSync(body.password, 10),
   });
 
-  const token = generateJwt(user);
-
   return {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    token: token,
+    token: generateJwt(user),
   };
+}
+
+export async function register(body: any) {
+  return await createUser(body);
 }
 
 export async function login(body: any) {
@@ -25,12 +27,12 @@ export async function login(body: any) {
   if (!user || !bcrypt.compareSync(body.password, user.password)) {
     throw new Error("User not found");
   }
-  const token = generateJwt(user);
+
   return {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    token: token,
+    token: generateJwt(user),
   };
 }
 
@@ -40,7 +42,7 @@ export function generateJwt(user: User) {
   }
   return jwt.sign(
     {
-      sub: user.$id,
+      sub: user.$id(),
       iat: Date.now(),
       iss: "api.example.com",
       aud: "app.example.com",

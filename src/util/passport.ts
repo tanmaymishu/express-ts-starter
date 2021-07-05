@@ -1,6 +1,6 @@
 import PassportJWT from "passport-jwt";
 import passport from "passport";
-import User from "../database/models/User";
+import User from "../database/models/user";
 
 var JwtStrategy = PassportJWT.Strategy,
   ExtractJwt = PassportJWT.ExtractJwt;
