@@ -1,8 +1,8 @@
-import "../src/util/helpers";
-import { Model } from "objection";
-import knex from "knex";
-import knexConfig from "../src/database/knexfile";
-import { createUser } from "../src/services/auth.service";
+import '../src/util/helpers';
+import { Model } from 'objection';
+import knex from 'knex';
+import knexConfig from '../src/database/knexfile';
+import { createUser } from '../src/services/auth.service';
 
 const $knex = knex(knexConfig);
 
@@ -21,6 +21,6 @@ export async function initUser() {
     firstName: 'John',
     lastName: 'Doe',
     email: 'john@example.com',
-    password: 'password',
+    password: 'password'
   });
 }

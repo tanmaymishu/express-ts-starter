@@ -1,7 +1,7 @@
-import app from "./app";
-import knex from "knex";
-import { Model } from "objection";
-import knexConfig from "./database/knexfile";
+import app from './app';
+import knex from 'knex';
+import { Model } from 'objection';
+import knexConfig from './database/knexfile';
 
 const port = process.env.APP_PORT || 3000;
 

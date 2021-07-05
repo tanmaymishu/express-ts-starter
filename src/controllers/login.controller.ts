@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { body } from "express-validator";
-import * as AuthService from "../services/auth.service";
+import { Request, Response } from 'express';
+import { body } from 'express-validator';
+import * as AuthService from '../services/auth.service';
 
-const rules = [body("email").exists(), body("password").exists()];
+const rules = [body('email').exists(), body('password').exists()];
 
 function store(req: Request, res: Response) {
   AuthService.login(req.body)
@@ -10,7 +10,7 @@ function store(req: Request, res: Response) {
       res.json({ user });
     })
     .catch((err) => {
-      res.status(422).json({ message: "Invalid username or password" });
+      res.status(422).json({ message: 'Invalid username or password' });
     });
 }
 

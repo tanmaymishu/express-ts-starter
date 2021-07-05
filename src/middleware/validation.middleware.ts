@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import { ValidationChain, validationResult } from "express-validator";
+import { NextFunction, Request, Response } from 'express';
+import { ValidationChain, validationResult } from 'express-validator';
 
 export default function validate(rules: ValidationChain[]) {
   return async (req: Request, res: Response, next: NextFunction) => {

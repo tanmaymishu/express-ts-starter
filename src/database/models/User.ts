@@ -1,7 +1,8 @@
-import Model from "./model";
+import UserFactory from '../factories/user.factory';
+import Model from './model';
 
 export default class User extends Model {
-  static tableName = "users";
+  static tableName = 'users';
 
   firstName!: string;
   lastName!: string;
@@ -12,5 +13,9 @@ export default class User extends Model {
     json = super.$formatJson(json);
     delete json.password;
     return json;
+  }
+
+  static factory() {
+    return new UserFactory(User);
   }
 }

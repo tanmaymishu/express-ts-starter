@@ -1,5 +1,5 @@
-import format from "date-fns/format";
-export { };
+import format from 'date-fns/format';
+export {};
 type envFunc = <T>(...args: any) => T;
 
 declare global {
@@ -8,13 +8,13 @@ declare global {
   namespace NodeJS {
     interface Global {
       toTimeStamp: (date: Date) => any;
-      env: envFunc
+      env: envFunc;
     }
   }
 }
 
 global.toTimeStamp = (date: Date) => {
-  return format(date, "yyyy-MM-dd HH:mm:ss");
+  return format(date, 'yyyy-MM-dd HH:mm:ss');
 };
 
 global.env = <T>(...args: any): T => {
@@ -23,4 +23,4 @@ global.env = <T>(...args: any): T => {
   }
 
   return process.env[args[0]] as any;
-}
+};

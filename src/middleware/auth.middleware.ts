@@ -1,5 +1,5 @@
-import passport from "passport";
+import passport from 'passport';
 
-const authorize = passport.authenticate("jwt", { session: false });
+const authorize = passport.authenticate('jwt', { session: false });
 
 export default authorize;

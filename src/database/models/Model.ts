@@ -1,4 +1,4 @@
-import { Model as BaseModel, snakeCaseMappers } from "objection";
+import { Model as BaseModel, snakeCaseMappers } from 'objection';
 
 export default class Model extends BaseModel {
   createdAt!: string;
