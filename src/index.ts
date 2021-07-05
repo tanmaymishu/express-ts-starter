@@ -54,3 +54,5 @@ app.use(function (req: Request, res: Response) {
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
+
+export default app;
