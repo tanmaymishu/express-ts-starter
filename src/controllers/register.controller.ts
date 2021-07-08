@@ -22,6 +22,7 @@ const rules = [
 
 async function store(req: Request, res: Response) {
   let user = await AuthService.register(req.body);
+
   return res.status(201).json({ user });
 }
 

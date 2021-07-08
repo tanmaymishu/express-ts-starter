@@ -1,6 +1,8 @@
 import User from '../database/models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { mailQueue } from '../queues/mail';
+import SendWelcomeEmail from '../jobs/send-welcome-email';
 
 export async function createUser(body: any) {
   let user = await User.query().insert({
@@ -19,7 +21,11 @@ export async function createUser(body: any) {
 }
 
 export async function register(body: any) {
-  return await createUser(body);
+  const user = await createUser(body);
+
+  mailQueue.add(SendWelcomeEmail.jobName, user);
+
+  return user;
 }
 
 export async function login(body: any) {
