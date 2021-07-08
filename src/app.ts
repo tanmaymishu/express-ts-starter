@@ -14,6 +14,11 @@ import logger from './util/logger';
 import morganLogger from './middleware/morgan.middleware';
 import routes from './routes';
 
+import { ExpressAdapter } from '@bull-board/express';
+import { createBullBoard } from '@bull-board/api';
+import { BullMQAdapter } from '@bull-board/api/BullMQAdapter';
+import { mailQueue } from './queues/mail';
+
 // Create an express app.
 const app = express();
 
@@ -29,6 +34,17 @@ app.use(morganLogger);
 
 // Register and mount the routes.
 app.use('/', routes);
+
+// Set up queue monitoring route.
+const serverAdapter = new ExpressAdapter();
+
+const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
+  queues: [new BullMQAdapter(mailQueue)],
+  serverAdapter: serverAdapter
+});
+
+serverAdapter.setBasePath('/admin/queues');
+app.use('/admin/queues', serverAdapter.getRouter());
 
 // Catch any error and send it as a json.
 app.use(function (

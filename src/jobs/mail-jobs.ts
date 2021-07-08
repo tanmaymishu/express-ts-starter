@@ -1,5 +1,3 @@
-import SendWelcomeEmail from "./send-welcome-email";
+import SendWelcomeEmail from './send-welcome-email';
 
-export const mailJobs = [
-    SendWelcomeEmail
-]
+export const mailJobs = [SendWelcomeEmail];

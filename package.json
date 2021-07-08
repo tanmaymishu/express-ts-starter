@@ -9,7 +9,7 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "test": "NODE_ENV=testing mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
     "start": "tsc && node dist/index.js",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' 'tests/**/*.ts' --write",
+    "fmt": "prettier --config .prettierrc 'src/**/*.ts' 'tests/**/*.ts' --write",
     "migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
     "migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
     "migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback"
@@ -39,6 +39,7 @@
     "typescript": "^4.3.4"
   },
   "dependencies": {
+    "@bull-board/express": "^3.3.0",
     "bcrypt": "^5.0.1",
     "bullmq": "^1.37.1",
     "date-fns": "^2.22.1",
