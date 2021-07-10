@@ -16,7 +16,7 @@ import routes from './routes';
 
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
-import { BullMQAdapter } from '@bull-board/api/BullMQAdapter';
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { mailQueue } from './queues/mail';
 
 // Create an express app.
@@ -31,6 +31,11 @@ app.use(multer().any());
 
 // Log the incoming requests to console.
 app.use(morganLogger);
+
+// A dummy route.
+app.get('/', (req, res, next) => {
+  res.json({ message: 'Home, Sweet Home.' });
+});
 
 // Register and mount the routes.
 app.use('/', routes);

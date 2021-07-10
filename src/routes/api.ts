@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { NextFunction, Router } from 'express';
 import * as PingController from '../controllers/ping.controller';
 import authorize from '../middleware/auth.middleware';
 
