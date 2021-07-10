@@ -1,20 +1,28 @@
-import { Job, Queue, QueueOptions, Worker } from 'bullmq';
+import { Job, Queue, Worker } from 'bullmq';
 import { mailJobs } from '../jobs/mail-jobs';
 
 const mailQueue = new Queue('mail', {
-  redis: {
+  connection: {
     host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    password: process.env.REDIS_PASSWORD
+    port: parseInt(<string>process.env.REDIS_PORT)
   }
-} as QueueOptions);
-
-const mailWorker = new Worker('mail', async (currentJob: Job) => {
-  mailJobs.forEach((job) => {
-    if (job.jobName == currentJob.name) {
-      new job(currentJob.data).handle();
-    }
-  });
 });
+
+const mailWorker = new Worker(
+  'mail',
+  async (currentJob: Job) => {
+    mailJobs.forEach((job) => {
+      if (job.jobName == currentJob.name) {
+        new job(currentJob.data).handle();
+      }
+    });
+  },
+  {
+    connection: {
+      host: process.env.REDIS_HOST,
+      port: parseInt(<string>process.env.REDIS_PORT)
+    }
+  }
+);
 
 export { mailQueue, mailWorker };
