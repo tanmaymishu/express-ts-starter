@@ -7,7 +7,7 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - ./nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx.prod.conf:/etc/nginx/conf.d/default.conf
             - ./data/certbot/dhparam:/etc/nginx/dhparam
             - ./data/certbot/conf:/etc/letsencrypt
             - ./data/certbot/logs:/var/log/letsencrypt
@@ -32,3 +32,4 @@ services:
         environment:
             - NODE_ENV=production
         command: yarn start
+        

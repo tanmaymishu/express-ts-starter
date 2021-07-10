@@ -54,8 +54,9 @@ if [ $# -gt 0 ];then
 
     # Add dhparam after installing ssl
     elif [ "$1" == "post-ssl" ]; then
+        shift 1
         curl https://ssl-config.mozilla.org/ffdhe2048.txt > data/certbot/dhparam/dhparam-2048.pem
-        $COMPOSE run --rm nginx nginx -s reload
+        $COMPOSE exec nginx nginx -s reload
 
     # Else, pass-thru args to docker-compose
     else

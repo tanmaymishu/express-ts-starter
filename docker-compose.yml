@@ -28,10 +28,7 @@ services:
         restart: unless-stopped
 
     app:
-        build:
-            context: .
-            args:
-                NODE_ENV: ${NODE_ENV}
+        build: .
         container_name: app
         depends_on:
             - redis
