@@ -52,4 +52,4 @@ Do you have a significant feature in mind? [Create an issue](https://github.com/
 
 ### 📝 Notes:
 - Although this template comes with many components pre-installed, it does not impose any hard-bound rule on the project structure. Feel free to customize the directory structure and add or remove the components as you see fit for your project. Removing a module will be easier since we're using TypeScript. Any good text editor/IDE will help you track down a non-existing reference in the codebase.
-- Kebab-case convention has been used for the file names since it is the most compatible across all operating systems. If you don't like this convention, feel free to change.
+- Kebab-case is used for the file names since it is the most compatible across all operating systems. If you don't like this convention, feel free to change.
