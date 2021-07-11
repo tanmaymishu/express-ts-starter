@@ -44,6 +44,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 
 ### 💅 Upcoming Features:
 - Template engine and view layer.
+- MongoDB Support and allow swapping between MongoDB and relational DBs.
 - Cookie-based authentication.
 - Unified database pagination.
 
