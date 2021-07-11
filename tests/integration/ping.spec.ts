@@ -10,7 +10,11 @@ describe('Ping', () => {
   });
 
   describe('GET /ping', () => {
-    it('returns pong', (done) => {
+    it('returns unauthorized when not logged in', (done) => {
+      request(app).get('/api/v1/ping').expect(401, 'Unauthorized', done);
+    });
+
+    it('returns pong when logged in', (done) => {
       request(app)
         .get('/api/v1/ping')
         .set('Authorization', 'Bearer ' + user.token)
