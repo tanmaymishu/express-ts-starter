@@ -3,8 +3,11 @@ export {};
 type envFunc = <T>(...args: any) => T;
 
 declare global {
+  type NumericQueryString = number | undefined;
+
   let toTimeStamp: (date: Date) => string;
   let env: envFunc;
+
   namespace NodeJS {
     interface Global {
       toTimeStamp: (date: Date) => any;

@@ -15,7 +15,7 @@ export default class User extends Model {
     return json;
   }
 
-  static factory() {
-    return new UserFactory(User);
+  static factory(amount: number = 0) {
+    return new UserFactory(User, amount);
   }
 }
