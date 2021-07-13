@@ -43,10 +43,10 @@ The project ships with some docker configs and a `cli`. You can interact with th
 - Adjust the production specific nginx configs in the `nginx.prod.conf` file.
 
 ### 💅 Upcoming Features:
-- Template engine and view layer.
-- MongoDB Support and allow swapping between MongoDB and relational DBs.
-- Cookie-based authentication.
-- Unified database pagination.
+- [ ] Template engine and view layer.
+- [ ] MongoDB Support and allow swapping between MongoDB and relational DBs.
+- [ ] Cookie-based authentication.
+- [x] Unified database pagination. [Done]
 
 Do you have a significant feature in mind? [Create an issue](https://github.com/tanmaymishu/nodejs-starter-ts/issues/new) or [send a pull request](https://github.com/tanmaymishu/nodejs-starter-ts/pulls).
 
