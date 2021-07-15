@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 function pong(req: Request, res: Response) {
-  res.json({ message: 'pong' });
+  if (req.accepts('text/plain')) {
+    res.render('pong');
+  } else {
+    res.json({ message: 'pong' });
+  }
 }
 
 export { pong };

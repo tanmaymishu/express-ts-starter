@@ -5,7 +5,7 @@ import authorize from '../middleware/auth.middleware';
 
 const router = Router();
 
-router.get('/ping', authorize, PingController.pong);
+router.get('/ping', PingController.pong);
 router.get('/users', authorize, UserController.index);
 
 export default router;
