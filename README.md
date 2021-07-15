@@ -9,6 +9,7 @@
 - Type-safety ([TypeScript](https://www.typescriptlang.org/)).
 - ORM with migration, factory, query builder ([Objection](https://vincit.github.io/objection.js/) + [Knex](https://knexjs.org)).
 - Authentication ([Passport](http://www.passportjs.org/)).
+- Templating ([EJS](https://ejs.co/))
 - Logging ([Winston](https://github.com/winstonjs/winston) + [Morgan](https://github.com/expressjs/morgan)).
 - Testing ([Supertest](https://github.com/visionmedia/supertest) + [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/)).
 - Mailing ([Nodemailer](https://nodemailer.com/)).
@@ -43,7 +44,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 - Adjust the production specific nginx configs in the `nginx.prod.conf` file.
 
 ### 💅 Upcoming Features:
-- [ ] Template engine and view layer.
+- [x] Template engine and view layer. [Done]
 - [ ] MongoDB Support and allow swapping between MongoDB and relational DBs.
 - [ ] Cookie-based authentication.
 - [x] Unified database pagination. [Done]
