@@ -33,13 +33,9 @@ app.use(multer().any());
 // Log the incoming requests to console.
 app.use(morganLogger);
 
-// Example routes.
+// Example route.
 app.get('/', (req, res, next) => {
   res.json({ message: 'Home, Sweet Home.' });
-});
-
-app.get('/ping', (req, res, next) => {
-  res.render('welcome');
 });
 
 // Register and mount the routes.
@@ -56,6 +52,10 @@ const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
 
 serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
+
+// Add views
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'ejs');
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
