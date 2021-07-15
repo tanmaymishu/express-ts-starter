@@ -18,6 +18,7 @@ import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { mailQueue } from './queues/mail';
+import path from 'path';
 
 // Create an express app.
 const app = express();
@@ -32,9 +33,13 @@ app.use(multer().any());
 // Log the incoming requests to console.
 app.use(morganLogger);
 
-// A dummy route.
+// Example routes.
 app.get('/', (req, res, next) => {
   res.json({ message: 'Home, Sweet Home.' });
+});
+
+app.get('/ping', (req, res, next) => {
+  res.render('welcome');
 });
 
 // Register and mount the routes.
@@ -48,8 +53,12 @@ const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
   serverAdapter: serverAdapter
 });
 
+
 serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
+
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Catch any error and send it as a json.
 app.use(function (

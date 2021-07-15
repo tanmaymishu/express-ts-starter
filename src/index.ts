@@ -2,6 +2,7 @@ import app from './app';
 import knex from 'knex';
 import { Model } from 'objection';
 import knexConfig from './database/knexfile';
+import path from 'path';
 
 const port = process.env.APP_PORT || 3000;
 
@@ -9,6 +10,10 @@ const port = process.env.APP_PORT || 3000;
 // your server this is all you have to do. For multi database systems, see
 // the Model.bindKnex() method.
 Model.knex(knex(knexConfig));
+
+// Add views
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'ejs');
 
 // Boot the server.
 app.listen(port, () => {
