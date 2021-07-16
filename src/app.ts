@@ -12,7 +12,8 @@ import './util/helpers';
 import multer from 'multer';
 import logger from './util/logger';
 import morganLogger from './middleware/morgan.middleware';
-import routes from './routes';
+import apiRoutes from './routes/api';
+import webRoutes from './routes/web';
 
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
@@ -20,8 +21,37 @@ import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { mailQueue } from './queues/mail';
 import path from 'path';
 
+import IORedis from 'ioredis';
+import connectRedis from 'connect-redis';
+import session from 'express-session';
+import passport from 'passport';
+
+const redisClient = new IORedis(
+  parseInt(<string>process.env.REDIS_PORT),
+  process.env.REDIS_HOST
+);
+const RedisStore = connectRedis(session);
+
 // Create an express app.
 const app = express();
+
+//Configure session middleware
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.JWT_SECRET as string,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false, // if true only transmit cookie over https
+      httpOnly: false, // if true prevent client side JS from reading the cookie
+      maxAge: 1000 * 60 * 60 * 24 // session max age in miliseconds
+    }
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Parse the application/json request body.
 app.use(express.json());
@@ -39,7 +69,8 @@ app.get('/', (req, res, next) => {
 });
 
 // Register and mount the routes.
-app.use('/', routes);
+app.use('/', webRoutes);
+app.use('/', apiRoutes);
 
 // Set up queue monitoring route.
 const serverAdapter = new ExpressAdapter();
@@ -48,7 +79,6 @@ const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
   queues: [new BullMQAdapter(mailQueue)],
   serverAdapter: serverAdapter
 });
-
 
 serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());

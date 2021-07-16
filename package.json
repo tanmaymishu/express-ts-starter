@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/chai": "^4.2.19",
+    "@types/connect-redis": "^0.0.17",
     "@types/express": "^4.17.12",
     "@types/faker": "^5.5.6",
     "@types/jsonwebtoken": "^8.5.2",
@@ -27,6 +28,7 @@
     "@types/nodemailer": "^6.4.2",
     "@types/passport": "^1.0.6",
     "@types/passport-jwt": "^3.0.5",
+    "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.11",
     "chai": "^4.3.4",
     "faker": "^5.5.3",
@@ -42,10 +44,12 @@
     "@bull-board/express": "^3.3.0",
     "bcrypt": "^5.0.1",
     "bullmq": "^1.37.1",
+    "connect-redis": "^6.0.0",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "express-validator": "^6.12.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.6",
@@ -57,6 +61,7 @@
     "objection": "^2.2.15",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "winston": "^3.3.3"
   }
 }

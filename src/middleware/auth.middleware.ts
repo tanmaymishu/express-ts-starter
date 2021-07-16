@@ -1,5 +1,22 @@
+import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
-const authorize = passport.authenticate('jwt', { session: false });
+const HOME = '/dashboard';
 
-export default authorize;
+const auth = {
+  guest: (req: Request, res: Response, next: NextFunction) => {
+    if (!req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect(HOME);
+  },
+  web: (req: Request, res: Response, next: NextFunction) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/login/create');
+  },
+  api: passport.authenticate('jwt', { session: false })
+};
+
+export default auth;
