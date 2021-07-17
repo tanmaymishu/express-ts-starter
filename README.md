@@ -46,7 +46,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 ### 💅 Upcoming Features:
 - [x] Template engine and view layer. [Done]
 - [ ] MongoDB Support and allow swapping between MongoDB and relational DBs.
-- [ ] Cookie-based authentication.
+- [x] Cookie-based authentication.
 - [x] Unified database pagination. [Done]
 
 Do you have a significant feature in mind? [Create an issue](https://github.com/tanmaymishu/nodejs-starter-ts/issues/new) or [send a pull request](https://github.com/tanmaymishu/nodejs-starter-ts/pulls).
