@@ -9,7 +9,7 @@ function store(req: Request, res: Response) {
     .then((user) => {
       res.cookie('jwt', user.token, {
         httpOnly: true,
-        secure: false // Should be true on production
+        secure: process.env.NODE_ENV === 'production' // Should be true on production
       });
       res.json({ user });
     })
