@@ -14,7 +14,7 @@ const auth = {
     if (req.isAuthenticated()) {
       return next();
     }
-    res.redirect('/login/create');
+    res.redirect('/login');
   },
   api: passport.authenticate('jwt', { session: false })
 };

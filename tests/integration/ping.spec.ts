@@ -10,7 +10,7 @@ describe('Ping', () => {
   });
 
   describe('GET /ping', () => {
-    it('returns pong when logged in', (done) => {
+    it('returns pong', (done) => {
       request(app)
         .get('/api/v1/ping')
         .set('Accept', 'application/json')

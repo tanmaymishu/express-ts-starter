@@ -7,14 +7,17 @@ declare global {
 
   let toTimeStamp: (date: Date) => string;
   let env: envFunc;
-
+  let JSON_REQ: string;
   namespace NodeJS {
     interface Global {
       toTimeStamp: (date: Date) => any;
       env: envFunc;
+      JSON_REQ: string;
     }
   }
 }
+
+global.JSON_REQ = 'application/json';
 
 global.toTimeStamp = (date: Date) => {
   return format(date, 'yyyy-MM-dd HH:mm:ss');

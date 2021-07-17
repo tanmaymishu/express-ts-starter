@@ -4,29 +4,36 @@
       <div>
         <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+          Create an account
         </h2>
-        <p class="text-green-500 text-center"><%= message %></p>
       </div>
-      <form class="mt-8 space-y-6" action="/login" method="POST">
-        <input type="hidden" name="_csrf" value="<%= _token %>">
+      <form class="mt-8 space-y-6" action="/register" method="POST">
+        <input type="hidden" name="_csrf" value="<%= _token %>" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
+            <label for="firstName" class="sr-only">First Name</label>
+            <input id="firstName" name="firstName" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="First Name">
+          </div>
+          <div>
+            <label for="lastName" class="sr-only">Last Name</label>
+            <input id="lastName" name="lastName" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Last Name">
+          </div>
+          <div>
             <label for="email-address" class="sr-only">Email address</label>
-            <input id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+            <input id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
           </div>
         </div>
-        <% errorBag.forEach(function(error) { %>
-          <small class="text-red-500"><%= error %></small>
+        <% validationErrors.forEach(function(error) { %>
+          <small class="text-red-500"><%= error.msg %></small>
         <% }) %>
         <div class="flex items-center justify-between">
           <div class="text-sm">
-            <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-500">
-              Don't have an account?
+            <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+              Already Registered?
             </a>
           </div>
         </div>
@@ -39,7 +46,7 @@
                 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
               </svg>
             </span>
-            Sign in
+            Sign Up
           </button>
         </div>
       </form>

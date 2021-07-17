@@ -10,7 +10,11 @@ export default function validate(rules: ValidationChain[]) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+      if (req.wantsJson()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+      req.flash('validationErrors', errors.array() as unknown as string[]);
+      return res.redirect('back');
     }
     next();
   };

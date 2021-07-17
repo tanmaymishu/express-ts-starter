@@ -7,6 +7,8 @@ if (process.env.NODE_ENV == 'testing') {
 }
 
 import express, { NextFunction, Request, Response } from 'express';
+import methodOverride from 'method-override';
+import csrf from 'csurf';
 import './util/passport';
 import './util/helpers';
 import multer from 'multer';
@@ -24,6 +26,7 @@ import path from 'path';
 import IORedis from 'ioredis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
+import flash from 'connect-flash';
 import passport from 'passport';
 
 const redisClient = new IORedis(
@@ -41,7 +44,7 @@ app.use(
     store: new RedisStore({ client: redisClient }),
     secret: process.env.JWT_SECRET as string,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie
@@ -52,7 +55,34 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+// Global Middlewares
+app.use(
+  // Add custom helpers to request object
+  (req, res, next) => {
+    req.wantsJson = () => {
+      return (
+        req.accepts()[0].includes('/json') || req.accepts()[0].includes('+json')
+      );
+    };
+    next();
+  },
+  // Save flash variables to the session
+  // for a single request.
+  (req, res, next) => {
+    // User defined message
+    res.locals.message = req.flash('message');
+    // Validation errors thrown from validate middleware
+    res.locals.validationErrors = req.flash('validationErrors');
+    // Generic error and success
+    res.locals.errorBag = req.flash('error');
+    res.locals.successBag = req.flash('success');
+    next();
+  }
+);
 
+// Allow PUT, DELETE, PATCH etc. from browser
+app.use(methodOverride('_method'));
 // Parse the application/json request body.
 app.use(express.json());
 // Parse the x-www-form-urlencoded request body.
@@ -69,8 +99,19 @@ app.get('/', (req, res, next) => {
 });
 
 // Register and mount the routes.
-app.use('/', webRoutes);
+// Register API routes. They don't require CSRF protection.
 app.use('/', apiRoutes);
+
+// Register Web routes. They do require CSRF protection.
+app.use(
+  '/',
+  csrf(),
+  (req, res, next) => {
+    res.locals._token = req.csrfToken();
+    next();
+  },
+  webRoutes
+);
 
 // Set up queue monitoring route.
 const serverAdapter = new ExpressAdapter();

@@ -9,4 +9,4 @@ async function index(req: Request, res: Response) {
   res.json(users);
 }
 
-export { index };
+export default { index };

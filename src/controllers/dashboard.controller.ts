@@ -5,4 +5,4 @@ function index(req: Request, res: Response) {
   res.render('dashboard');
 }
 
-export { index };
+export default { index };
