@@ -50,8 +50,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // if true only transmit cookie over https
-      httpOnly: false, // if true prevent client side JS from reading the cookie
+      httpOnly: true, // if true prevent client side JS from reading the cookie
+      secure: process.env.NODE_ENV === 'production', // if true only transmit cookie over https
       maxAge: 1000 * 60 * 60 * 24 // session max age in miliseconds
     }
   })

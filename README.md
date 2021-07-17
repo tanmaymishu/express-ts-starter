@@ -8,8 +8,9 @@
 - Good ol' [Express](https://expressjs.com/).
 - Type-safety ([TypeScript](https://www.typescriptlang.org/)).
 - ORM with migration, factory, query builder ([Objection](https://vincit.github.io/objection.js/) + [Knex](https://knexjs.org)).
-- Authentication ([Passport](http://www.passportjs.org/)).
-- Templating ([EJS](https://ejs.co/))
+- Session-based and Token-based Authentication ([Passport](http://www.passportjs.org/)).
+- Templating ([EJS](https://ejs.co/)).
+- Utility-first CSS framework ([Tailwind](https://tailwindcss.com/) [via CDN]).
 - Logging ([Winston](https://github.com/winstonjs/winston) + [Morgan](https://github.com/expressjs/morgan)).
 - Testing ([Supertest](https://github.com/visionmedia/supertest) + [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/)).
 - Mailing ([Nodemailer](https://nodemailer.com/)).
@@ -46,7 +47,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 ### 💅 Upcoming Features:
 - [x] Template engine and view layer. [Done]
 - [ ] MongoDB Support and allow swapping between MongoDB and relational DBs.
-- [ ] Cookie-based authentication.
+- [x] Cookie-based authentication. [Done]
 - [x] Unified database pagination. [Done]
 
 Do you have a significant feature in mind? [Create an issue](https://github.com/tanmaymishu/nodejs-starter-ts/issues/new) or [send a pull request](https://github.com/tanmaymishu/nodejs-starter-ts/pulls).
