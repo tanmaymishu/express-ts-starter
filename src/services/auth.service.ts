@@ -53,6 +53,9 @@ export function generateJwt(user: User) {
       iss: 'api.example.com',
       aud: 'app.example.com'
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
+    {
+      expiresIn: 604800
+    }
   );
 }

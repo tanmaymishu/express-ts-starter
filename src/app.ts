@@ -9,6 +9,7 @@ if (process.env.NODE_ENV == 'testing') {
 import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
 import csrf from 'csurf';
+import cookieParser from 'cookie-parser';
 import './util/passport';
 import './util/helpers';
 import multer from 'multer';
@@ -37,6 +38,9 @@ const RedisStore = connectRedis(session);
 
 // Create an express app.
 const app = express();
+
+// Make req.cookies accessible
+app.use(cookieParser());
 
 //Configure session middleware
 app.use(
