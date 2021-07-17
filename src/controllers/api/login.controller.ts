@@ -7,6 +7,10 @@ const rules = [body('email').exists(), body('password').exists()];
 function store(req: Request, res: Response) {
   AuthService.login(req.body)
     .then((user) => {
+      res.cookie('jwt', user.token, {
+        httpOnly: true,
+        secure: false // Should be true on production
+      });
       res.json({ user });
     })
     .catch((err) => {

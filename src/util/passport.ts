@@ -3,9 +3,10 @@ import PassportLocal from 'passport-local';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import User from '../database/models/user';
+import { Request } from 'express';
 
-const JwtStrategy = PassportJWT.Strategy,
-  ExtractJwt = PassportJWT.ExtractJwt;
+const JwtStrategy = PassportJWT.Strategy;
+// ExtractJwt = PassportJWT.ExtractJwt;
 
 const customFields = {
   usernameField: 'email',
@@ -26,13 +27,21 @@ const localStrategy = new LocalStrategy(
 passport.use(localStrategy);
 
 const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: function (req: Request) {
+    let token = null;
+    if (req && req.cookies) token = req.cookies['jwt'];
+    return token;
+  },
   secretOrKey: process.env.JWT_SECRET,
   issuer: 'api.example.com',
   audience: 'app.example.com'
 };
 
 const jwtStrategy = new JwtStrategy(opts, async function (payload, done) {
+  if (Date.now() > payload.exp) {
+    done('Unauthorized', false);
+  }
   const user = await User.query().findById(payload.sub);
   if (user) {
     return done(null, user);
