@@ -49,6 +49,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 - [ ] MongoDB Support and allow swapping between MongoDB and relational DBs.
 - [x] Cookie-based authentication. [Done]
 - [x] Unified database pagination. [Done]
+- [ ] Simplified file uploader.
 
 Do you have a significant feature in mind? [Create an issue](https://github.com/tanmaymishu/nodejs-starter-ts/issues/new) or [send a pull request](https://github.com/tanmaymishu/nodejs-starter-ts/pulls).
 
