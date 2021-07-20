@@ -9,6 +9,7 @@ if (process.env.NODE_ENV == 'testing') {
 import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
 import csrf from 'csurf';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import './util/passport';
 import './util/helpers';
@@ -93,7 +94,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Parse the form-data request body.
 app.use(multer().any());
-
+// Enable CORS
+app.use(cors());
 // Log the incoming requests to console.
 app.use(morganLogger);
 
