@@ -51,6 +51,7 @@ The project ships with some docker configs and a `cli`. You can interact with th
 - [x] Unified database pagination. [Done]
 - [ ] Simplified file uploader.
 - [ ] Add seeders and seeder commands.
+
 Do you have a significant feature in mind? [Create an issue](https://github.com/tanmaymishu/nodejs-starter-ts/issues/new) or [send a pull request](https://github.com/tanmaymishu/nodejs-starter-ts/pulls).
 
 ### 📝 Notes:
