@@ -40,7 +40,7 @@ const opts = {
 
 const jwtStrategy = new JwtStrategy(opts, async function (payload, done) {
   if (Date.now() > payload.exp) {
-    done('Unauthorized', false);
+    return done(null, false);
   }
   const user = await User.query().findById(payload.sub);
   if (user) {

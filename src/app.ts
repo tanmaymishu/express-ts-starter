@@ -101,7 +101,7 @@ app.use(morganLogger);
 
 // Example route.
 app.get('/', (req, res, next) => {
-  res.json({ message: 'Home, Sweet Home.' });
+  return res.json({ message: 'Home, Sweet Home.' });
 });
 
 // Register and mount the routes.
