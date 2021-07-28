@@ -49,6 +49,8 @@
     "@bull-board/express": "^3.3.0",
     "bcrypt": "^5.0.1",
     "bullmq": "^1.37.1",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "connect-flash": "^0.1.1",
     "connect-redis": "^6.0.0",
     "cookie-parser": "^1.4.5",
@@ -72,6 +74,8 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "routing-controllers": "^0.9.0",
     "winston": "^3.3.3"
   }
 }

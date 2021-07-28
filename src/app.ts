@@ -5,7 +5,8 @@ if (process.env.NODE_ENV == 'testing') {
 } else {
   dotenv.config();
 }
-
+import 'reflect-metadata';
+import { useExpressServer } from 'routing-controllers';
 import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
 import csrf from 'csurf';
@@ -16,8 +17,6 @@ import './util/helpers';
 import multer from 'multer';
 import logger from './util/logger';
 import morganLogger from './middleware/morgan.middleware';
-import apiRoutes from './routes/api';
-import webRoutes from './routes/web';
 
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
@@ -104,19 +103,24 @@ app.get('/', (req, res, next) => {
   return res.json({ message: 'Home, Sweet Home.' });
 });
 
-// Register and mount the routes.
-// Register API routes. They don't require CSRF protection.
-app.use('/', apiRoutes);
-
-// Register Web routes. They do require CSRF protection.
+// Register CSRF.
 app.use(
   '/',
-  csrf(),
   (req, res, next) => {
-    res.locals._token = req.csrfToken();
-    next();
+    if (req.path.startsWith('/api/')) {
+      next();
+    } else {
+      return csrf()(req, res, next)
+    }
   },
-  webRoutes
+  (req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      next();
+    } else {
+      res.locals._token = req.csrfToken();
+      next();
+    }
+  }
 );
 
 // Set up queue monitoring route.
@@ -137,6 +141,17 @@ app.set('view engine', 'ejs');
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
+
+useExpressServer(app, {
+  controllers: [
+    path.join(__dirname, '/controllers/**/*.controller.ts')
+  ],
+  defaultErrorHandler: false,
+  // middlewares: [
+  //   path.join(__dirname, '/middleware/global/*.middleware.ts')
+  // ]
+});
+
 // Catch any error and send it as a json.
 app.use(function (
   error: Error,
@@ -148,11 +163,15 @@ app.use(function (
     logger.error(error.message);
     return res.status(500).json({ error: error.message });
   }
+  return next();
 });
 
 // Catch 404.
 app.use(function (req: Request, res: Response) {
-  return res.status(404).json({ message: 'Page Not Found!' });
+  if (!res.headersSent) {
+    return res.status(404).json({ message: 'Page Not Found!' });
+  }
 });
+
 
 export default app;
