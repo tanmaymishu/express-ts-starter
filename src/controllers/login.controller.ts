@@ -1,9 +1,7 @@
-import csurf from 'csurf';
 import { Request, Response } from 'express';
 import passport from 'passport';
 import { Controller, Delete, Get, Post, Render, Req, Res, UseBefore } from 'routing-controllers';
 import auth from '../middleware/auth.middleware';
-// import csrf from '../middleware/csrf.middleware';
 
 @Controller()
 export class LoginController {
