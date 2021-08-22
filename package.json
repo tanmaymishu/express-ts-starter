@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc && cp -R src/views dist/views",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "test": "NODE_ENV=testing mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
+    "test": "NODE_ENV=testing TS_NODE_TRANSPILE_ONLY=true TS_NODE_FILES=true mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
     "start": "tsc && cp -R src/views dist/views && node dist/index.js",
     "fmt": "prettier --config .prettierrc 'src/**/*.ts' 'tests/**/*.ts' --write",
     "migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make -x ts",
