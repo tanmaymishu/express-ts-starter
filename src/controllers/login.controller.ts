@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import passport from 'passport';
 import { Controller, Delete, Get, Post, Render, Req, Res, UseBefore } from 'routing-controllers';
+import { Service } from 'typedi';
 import auth from '../middleware/auth.middleware';
 
 @Controller()
+@Service()
 export class LoginController {
   @Get('/login')
   @UseBefore(auth.guest)

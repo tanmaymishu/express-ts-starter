@@ -1,12 +1,13 @@
-import User from '../../src/database/models/user';
-import * as authService from '../../src/services/auth.service';
+import User from '../../src/database/sql/models/user';
 import { expect } from 'chai';
+import Container from 'typedi';
+import AuthService from '../../src/services/auth.service'
 
 describe('auth', () => {
   describe('auth service', () => {
     it('can generate JWT for a user', async () => {
       const user = User.factory().makeOne({ $id: () => 1 } as User);
-      expect(authService.generateJwt(user)).to.be.a('string');
+      expect(Container.get(AuthService).generateJwt(user)).to.be.a('string');
     });
   });
 });

@@ -2,7 +2,8 @@ import '../src/util/helpers';
 import { Model } from 'objection';
 import knex from 'knex';
 import knexConfig from '../src/database/knexfile';
-import { createUser } from '../src/services/auth.service';
+import AuthService from '../src/services/auth.service';
+import Container from 'typedi';
 
 const $knex = knex(knexConfig);
 
@@ -17,7 +18,7 @@ export async function refreshDB() {
 }
 
 export async function initUser() {
-  return await createUser({
+  return await Container.get(AuthService).createUser({
     firstName: 'John',
     lastName: 'Doe',
     email: 'john@example.com',

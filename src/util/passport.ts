@@ -2,7 +2,7 @@ import PassportJWT from 'passport-jwt';
 import PassportLocal from 'passport-local';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
-import User from '../database/models/user';
+import User from '../database/sql/models/user';
 import { Request } from 'express';
 
 const JwtStrategy = PassportJWT.Strategy;
