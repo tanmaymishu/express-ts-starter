@@ -14,11 +14,11 @@ const knexConfig: Knex.Config = {
     process.env.NODE_ENV == 'testing'
       ? ':memory:'
       : {
-          host: process.env.DB_HOST,
-          database: process.env.DB_DATABASE,
-          user: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD
-        },
+        host: process.env.DB_HOST,
+        database: process.env.DB_DATABASE,
+        user: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD
+      },
   useNullAsDefault: process.env.NODE_ENV == 'testing',
   pool: {
     min: 2,
@@ -26,7 +26,7 @@ const knexConfig: Knex.Config = {
   },
   migrations: {
     tableName: 'migrations',
-    directory: path.join(__dirname, 'migrations')
+    directory: path.join(__dirname, 'sql/migrations')
   }
 };
 

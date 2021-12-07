@@ -1,61 +1,66 @@
-import User from '../database/models/user';
+import User from '../database/sql/models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { mailQueue } from '../queues/mail';
 import SendWelcomeEmail from '../jobs/send-welcome-email';
+import { Request } from 'express';
+import { Inject, Service } from 'typedi';
+import Repository from '../repositories/repository';
+import Authenticatable from '../database/authenticatable';
+@Service()
+export default class AuthService {
+  constructor(@Inject('user.repository') public userRepository: Repository<User>) { }
 
-export async function createUser(body: any) {
-  let user = await User.query().insert({
-    firstName: body.firstName,
-    lastName: body.lastName,
-    email: body.email,
-    password: bcrypt.hashSync(body.password, 10)
-  });
+  async createUser(body: any) {
+    let user = await this.userRepository.save(body);
 
-  return {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    token: generateJwt(user)
-  };
-}
-
-export async function register(body: any) {
-  const user = await createUser(body);
-
-  mailQueue.add(SendWelcomeEmail.jobName, user);
-
-  return user;
-}
-
-export async function login(body: any) {
-  const user = await User.query().findOne('email', body.email);
-  if (!user || !bcrypt.compareSync(body.password, user.password)) {
-    throw new Error('User not found');
+    return {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: this.generateJwt(user)
+    };
   }
 
-  return {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    token: generateJwt(user)
-  };
-}
+  async register(req: Request) {
+    const user = await this.createUser(req.body);
 
-export function generateJwt(user: User) {
-  if (!process.env.JWT_SECRET) {
-    throw new Error('JWT secret not set');
+    mailQueue.add(SendWelcomeEmail.jobName, user);
+
+    return user;
   }
-  return jwt.sign(
-    {
-      sub: user.$id(),
-      iat: Date.now(),
-      iss: 'api.example.com',
-      aud: 'app.example.com'
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: 604800
+
+  async login(req: Request) {
+    const user = await this.userRepository.findOne({ email: req.body.email });
+
+    // const user = await User.query().findOne('email', body.email);
+    if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
+      throw new Error('User not found');
     }
-  );
+
+    return {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: this.generateJwt(user)
+    };
+  }
+
+  generateJwt(user: Authenticatable) {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT secret not set');
+    }
+    return jwt.sign(
+      {
+        sub: user.getId(),
+        iat: Date.now(),
+        iss: 'api.example.com',
+        aud: 'app.example.com'
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: 604800
+      }
+    );
+  }
 }

@@ -6,13 +6,12 @@ if (process.env.NODE_ENV == 'testing') {
   dotenv.config();
 }
 import 'reflect-metadata';
-import { useExpressServer } from 'routing-controllers';
+import { useContainer, useExpressServer } from 'routing-controllers';
 import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
 import csrf from 'csurf';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import './util/passport';
 import './util/helpers';
 import multer from 'multer';
 import logger from './util/logger';
@@ -29,6 +28,17 @@ import connectRedis from 'connect-redis';
 import session from 'express-session';
 import flash from 'connect-flash';
 import passport from 'passport';
+import Container from 'typedi';
+import AppServiceProvider from './providers/app-service.provider';
+import AuthServiceProvider from './providers/auth-service.provider';
+import DatabaseServiceProvider from './providers/database-service.provider';
+
+const providers = [
+  AppServiceProvider,
+  DatabaseServiceProvider,
+  AuthServiceProvider,
+]
+providers.forEach(provider => (new provider).register());
 
 const redisClient = new IORedis(
   parseInt(<string>process.env.REDIS_PORT),
@@ -140,7 +150,7 @@ app.set('view engine', 'ejs');
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
-
+useContainer(Container);
 
 useExpressServer(app, {
   controllers: [
@@ -160,7 +170,7 @@ app.use(function (
   next: NextFunction
 ) {
   if (error) {
-    logger.error(error.message);
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
   return next();
