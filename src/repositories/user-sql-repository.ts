@@ -13,10 +13,10 @@ export default class UserSQLRepository implements Repository<User> {
     }
 
     async findOne(criteria: Criteria): Promise<User> {
-        return await User.query().findOne(criteria);
+        return await User.query().findOne(criteria) as User;
     }
 
     async findById(id: number | string): Promise<User> {
-        return await User.query().findById(id);
+        return await User.query().findById(id) as User;
     }
 }
