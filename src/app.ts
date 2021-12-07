@@ -12,7 +12,6 @@ import methodOverride from 'method-override';
 import csrf from 'csurf';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-// import './util/passport';
 import './util/helpers';
 import multer from 'multer';
 import logger from './util/logger';

@@ -5,7 +5,7 @@ import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { Request } from 'express';
 import Repository from "../repositories/repository";
-import Container, { Inject, Service } from "typedi";
+import Container from "typedi";
 import Authenticatable from "../database/authenticatable";
 
 export default class AuthServiceProvider extends ServiceProvider {
