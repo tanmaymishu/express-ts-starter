@@ -1,9 +1,9 @@
 export default class BaseFactory<T> {
-  constructor(private model: any, protected amount = 0) {}
-  definition() {}
+  constructor(private model: any, protected amount = 0) { }
+  definition() { }
 
   makeOne(overrides?: T): T {
-    return { ...(this.definition() as any), ...overrides };
+    return { ...(this.definition() as any), ...overrides } as T;
   }
 
   make(overrides?: T): T[] {

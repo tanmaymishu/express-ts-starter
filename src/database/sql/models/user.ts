@@ -1,7 +1,14 @@
+import Authenticatable from '../../authenticatable';
 import UserFactory from '../factories/user.factory';
 import Model from './model';
 
-export default class User extends Model {
+export default class User extends Model implements Authenticatable {
+  getId(): string | number {
+    return this.$id();
+  }
+  getPassword(): string {
+    return this.password;
+  }
   static tableName = 'users';
 
   firstName!: string;

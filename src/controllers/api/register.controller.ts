@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Controller, Post, Req, Res, UseBefore } from 'routing-controllers';
-import User from '../../database/sql/models/user';
+import Container, { Service } from 'typedi';
+import Authenticatable from '../../database/authenticatable';
 import validate from '../../middleware/validation.middleware';
+import Repository from '../../repositories/repository';
 import AuthService from '../../services/auth.service';
 
 @Controller('/api/v1')
+@Service()
 export class RegisterController {
 
   constructor(public authService: AuthService) { }
@@ -20,7 +23,8 @@ export class RegisterController {
       .isEmail()
       .bail()
       .custom(async (value) => {
-        const user = await User.query().findOne('email', value);
+        const userRepo = Container.get('user.repository') as Repository<Authenticatable>;
+        const user = await userRepo.findOne({ email: value });
         if (user) {
           return Promise.reject('Email has already been taken.');
         }
@@ -30,7 +34,7 @@ export class RegisterController {
   @Post('/register')
   @UseBefore(validate(RegisterController.rules))
   async store(@Req() req: Request, @Res() res: Response) {
-    let user = await this.authService.register(req.body);
+    let user = await this.authService.register(req);
 
     return res.status(201).json({ user });
   }

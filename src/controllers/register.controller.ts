@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Controller, Get, Post, Req, Res, UseBefore } from 'routing-controllers';
-import { Service } from 'typedi';
-import User from '../database/sql/models/user';
+import Container, { Service } from 'typedi';
+import Authenticatable from '../database/authenticatable';
 import auth from '../middleware/auth.middleware';
 import validate from '../middleware/validation.middleware';
+import Repository from '../repositories/repository';
 import AuthService from '../services/auth.service';
 
 @Controller()
@@ -21,7 +22,8 @@ export class RegisterController {
       .isEmail()
       .bail()
       .custom(async (value) => {
-        const user = await User.query().findOne('email', value);
+        let userRepository: Repository<Authenticatable> = Container.get('user.repository');
+        const user = await userRepository.findOne({ email: value });
         if (user) {
           return Promise.reject('Email has already been taken.');
         }
@@ -31,7 +33,6 @@ export class RegisterController {
   @Get('/register')
   @UseBefore(auth.guest)
   create(@Req() req: Request, @Res() res: Response) {
-    console.log(this.authService);
     res.render('register');
     return res;
   }

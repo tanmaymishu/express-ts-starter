@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Controller, Post, Req, Res, UseBefore } from 'routing-controllers';
+import { Service } from 'typedi';
 import validate from '../../middleware/validation.middleware';
 import AuthService from '../../services/auth.service';
 
 @Controller('/api/v1')
+@Service()
 export class LoginController {
   constructor(public authService: AuthService) { }
 

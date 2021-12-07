@@ -6,6 +6,7 @@ import SendWelcomeEmail from '../jobs/send-welcome-email';
 import { Request } from 'express';
 import { Inject, Service } from 'typedi';
 import Repository from '../repositories/repository';
+import Authenticatable from '../database/authenticatable';
 @Service()
 export default class AuthService {
   constructor(@Inject('user.repository') public userRepository: Repository<User>) { }
@@ -30,7 +31,7 @@ export default class AuthService {
   }
 
   async login(req: Request) {
-    const user = await this.userRepository.findOne({ field: 'email', value: req.body.email });
+    const user = await this.userRepository.findOne({ email: req.body.email });
 
     // const user = await User.query().findOne('email', body.email);
     if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
@@ -45,13 +46,13 @@ export default class AuthService {
     };
   }
 
-  generateJwt(user: User) {
+  generateJwt(user: Authenticatable) {
     if (!process.env.JWT_SECRET) {
       throw new Error('JWT secret not set');
     }
     return jwt.sign(
       {
-        sub: user.$id(),
+        sub: user.getId(),
         iat: Date.now(),
         iss: 'api.example.com',
         aud: 'app.example.com'
