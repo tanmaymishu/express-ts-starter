@@ -18,7 +18,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/chai": "^4.2.19",
     "@types/connect-flash": "^0.0.37",
-    "@types/connect-redis": "^0.0.17",
+    "@types/connect-redis": "^0.0.18",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
     "@types/csurf": "^1.11.2",
