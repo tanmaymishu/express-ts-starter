@@ -154,7 +154,7 @@ useContainer(Container);
 
 useExpressServer(app, {
   controllers: [
-    path.join(__dirname, '/controllers/**/*.controller.ts')
+    path.join(__dirname, '/controllers/**/*.controller.*')
   ],
   defaultErrorHandler: false,
   // middlewares: [
