@@ -14,7 +14,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import './util/helpers';
 import multer from 'multer';
-import logger from './util/logger';
 import morganLogger from './middleware/morgan.middleware';
 
 import { ExpressAdapter } from '@bull-board/express';

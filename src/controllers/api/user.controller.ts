@@ -6,10 +6,10 @@ import User from '../../database/sql/models/user';
 export class UserController {
   @Get('/users')
   async index(@Req() req: Request, @Res() res: Response) {
-    const users = await User.query().paginate(
-      req.query.page as NumericQueryString,
-      15
-    );
-    return res.json(users);
+    // const users = await User.query().paginate(
+    //   req.query.page as NumericQueryString,
+    //   15
+    // );
+    return res.json({ foo: 'bar' });
   }
 }
