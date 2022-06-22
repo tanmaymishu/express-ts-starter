@@ -5,6 +5,7 @@
   "author": "Tanmay Mishu <tanmaymishu@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "touch src/database/database.sqlite && cp .env.example .env && npm run migrate:latest",
     "build": "tsc && cp -R src/views dist/views",
     "dev": "nodemon --exec ts-node src/index.ts",
     "test": "NODE_ENV=testing TS_NODE_TRANSPILE_ONLY=true TS_NODE_FILES=true mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
@@ -40,7 +41,7 @@
     "mocha": "^9.0.2",
     "nodemon": "^2.0.9",
     "prettier": "^2.3.2",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.0.8",
     "supertest": "^6.1.3",
     "ts-node": "^10.0.0",
     "ts-node-dev": "^1.1.8",
