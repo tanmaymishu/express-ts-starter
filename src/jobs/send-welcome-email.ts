@@ -1,10 +1,10 @@
-import User from '../database/sql/models/user';
+import { User } from '../database/sql/entities/user.entity';
 import { transporter } from '../util/mailer';
 
 export default class SendWelcomeEmail {
   static jobName = 'sendWelcomeEmail';
 
-  constructor(public user: User) { }
+  constructor(public user: User) {}
 
   async handle() {
     await transporter.sendMail({

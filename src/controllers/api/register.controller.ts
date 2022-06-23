@@ -1,17 +1,15 @@
 import { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Controller, Post, Req, Res, UseBefore } from 'routing-controllers';
-import Container, { Service } from 'typedi';
-import Authenticatable from '../../database/authenticatable';
+import { User } from '../../database/sql/entities/user.entity';
+import { Service } from 'typedi';
 import validate from '../../middleware/validation.middleware';
-import Repository from '../../repositories/repository';
 import AuthService from '../../services/auth.service';
 
 @Controller('/api/v1')
 @Service()
 export class RegisterController {
-
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService) {}
 
   static rules = [
     body('firstName', 'First name is missing').exists(),
@@ -23,8 +21,7 @@ export class RegisterController {
       .isEmail()
       .bail()
       .custom(async (value) => {
-        const userRepo = Container.get('user.repository') as Repository<Authenticatable>;
-        const user = await userRepo.findOne({ email: value });
+        const user = await User.findOneBy({ email: value });
         if (user) {
           return Promise.reject('Email has already been taken.');
         }
