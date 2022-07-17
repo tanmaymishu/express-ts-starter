@@ -1,4 +1,4 @@
 export default class ServiceProvider {
-    register() { }
-    boot() { }
+  register() {}
+  boot() {}
 }

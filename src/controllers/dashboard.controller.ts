@@ -1,5 +1,12 @@
 import { Request, Response } from 'express';
-import { Controller, Get, Render, Req, Res, UseBefore } from 'routing-controllers';
+import {
+  Controller,
+  Get,
+  Render,
+  Req,
+  Res,
+  UseBefore
+} from 'routing-controllers';
 import { Service } from 'typedi';
 import auth from '../middleware/auth.middleware';
 

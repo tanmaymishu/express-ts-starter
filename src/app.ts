@@ -35,9 +35,9 @@ import DatabaseServiceProvider from './providers/database-service.provider';
 const providers = [
   AppServiceProvider,
   DatabaseServiceProvider,
-  AuthServiceProvider,
-]
-providers.forEach(provider => (new provider).register());
+  AuthServiceProvider
+];
+providers.forEach((provider) => new provider().register());
 
 const redisClient = new IORedis(
   parseInt(<string>process.env.REDIS_PORT),
@@ -119,7 +119,7 @@ app.use(
     if (req.path.startsWith('/api/')) {
       next();
     } else {
-      return csrf()(req, res, next)
+      return csrf()(req, res, next);
     }
   },
   (req, res, next) => {
@@ -152,10 +152,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 useContainer(Container);
 
 useExpressServer(app, {
-  controllers: [
-    path.join(__dirname, '/controllers/**/*.controller.*')
-  ],
-  defaultErrorHandler: false,
+  controllers: [path.join(__dirname, '/controllers/**/*.controller.*')],
+  defaultErrorHandler: false
   // middlewares: [
   //   path.join(__dirname, '/middleware/global/*.middleware.ts')
   // ]
@@ -181,6 +179,5 @@ app.use(function (req: Request, res: Response) {
     return res.status(404).json({ message: 'Page Not Found!' });
   }
 });
-
 
 export default app;

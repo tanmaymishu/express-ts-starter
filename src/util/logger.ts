@@ -61,7 +61,7 @@ const format = winston.format.combine(
 const transports = [
   // Allow the use the console to print the messages
   new winston.transports.Console({
-    format: consoleFormat,
+    format: consoleFormat
   }),
   // Allow to print all the error level messages inside the error.log file
   new winston.transports.File({

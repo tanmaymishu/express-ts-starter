@@ -22,7 +22,9 @@
 ### 🏁 Getting Started:
 
 - [Generate a project](https://github.com/tanmaymishu/nodejs-starter-ts/generate) based on this template.
+- Create two postgres/mysql databases: `express_ts` and `express_ts_test`
 - Clone the newly created repo and `cd` into the directory.
+- Change the DB credentials accordingly in the `.env.example` and `.env.test` files. In the next step, a `.env` file will be generated based on these changes.
 - Run `npm run install` or, `yarn install` if you're using yarn.
 - Run `npm run dev` or, `yarn dev`.
 
@@ -33,7 +35,8 @@
 - `npm run test`: Run all the unit and integration tests located in /tests directory.
 - `npm run start`: Compile the .ts source files and run the project by invoking the compiled source files.
 - `npm run fmt`: Format the source code using the rules defined in .prettierrc.
-- `npm run migrate:make`: Create a migration file. Ex: `npm run migrate:make create_users_table`. A migration file with current timestamp will be created inside the /src/database/migrations directory.
+- `npm run entity:make`: Create a migration file. Ex: `npm run entity:make Post`. An entity file will be created inside the /src/database/sql/entities directory.
+- `npm run migrate:make`: Create a migration file. Ex: `npm run migrate:make CreatePostsTable`. A migration file with current timestamp will be created inside the /src/database/sql/migrations directory.
 - `npm run migrate`: Migrate the database schema. This will apply all newly created migrations.
 - `npm run migrate:rollback`: Undo the last run migration.
 - To run more migration or seed-specific commands, consider installing the knex cli globally. [Learn more](https://knexjs.org/#Migrations-CLI).
