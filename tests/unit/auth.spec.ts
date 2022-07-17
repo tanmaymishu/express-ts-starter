@@ -1,14 +1,17 @@
-import User from '../../src/database/sql/models/user';
+import { User } from '../../src/database/sql/entities/user.entity';
 import { expect } from 'chai';
 import Container from 'typedi';
-import AuthService from '../../src/services/auth.service'
-import UserSQLRepository from '../../src/repositories/user-sql-repository';
+import AuthService from '../../src/services/auth.service';
 
 describe('auth', () => {
   describe('auth service', () => {
     it('can generate JWT for a user', async () => {
-      Container.set('user.repository', new UserSQLRepository());
-      const user = User.factory().makeOne({ getId: () => 1 } as User);
+      const user = new User();
+      user.firstName = 'John';
+      user.lastName = 'Doe';
+      user.email = 'john@example.com';
+      user.password = 'password';
+      user.id = 1;
       expect(Container.get(AuthService).generateJwt(user)).to.be.a('string');
     });
   });

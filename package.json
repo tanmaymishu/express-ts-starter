@@ -5,17 +5,17 @@
   "author": "Tanmay Mishu <tanmaymishu@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cp .env.example .env",
+    "postinstall": "cp .env.example .env && npm run migrate",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc && cp -R src/views dist/views",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "test": "NODE_ENV=testing TS_NODE_TRANSPILE_ONLY=true TS_NODE_FILES=true mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
+    "test": "NODE_ENV=test TS_NODE_TRANSPILE_ONLY=true TS_NODE_FILES=true mocha --check-leaks --exit -r ts-node/register \"tests/**/*.spec.ts\"",
     "start": "NODE_ENV=production tsc && cp -R src/views dist/views && node dist/index.js",
     "fmt": "prettier --config .prettierrc 'src/**/*.ts' 'tests/**/*.ts' --write",
     "entity:make": "cd src/database/sql/entities/ && typeorm-ts-node-commonjs entity:create",
     "migrate:make": "cd src/database/sql/migrations/ && typeorm-ts-node-commonjs migration:create",
-    "migrate": "typeorm-ts-node-commonjs migration:run -d src/database/sql/data-source.ts",
-    "migrate:rollback": "typeorm-ts-node-commonjs migration:revert -d src/database/sql/data-source.ts"
+    "migrate": "NODE_ENV=development typeorm-ts-node-commonjs migration:run -d src/database/sql/data-source.ts",
+    "migrate:rollback": "NODE_ENV=development typeorm-ts-node-commonjs migration:revert -d src/database/sql/data-source.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

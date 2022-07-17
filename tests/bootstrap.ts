@@ -1,20 +1,21 @@
 import '../src/util/helpers';
-import { Model } from 'objection';
-import knex from 'knex';
-import knexConfig from '../src/database/knexfile';
 import AuthService from '../src/services/auth.service';
 import Container from 'typedi';
+import { AppDataSource } from '../src/database/sql/data-source';
 
-const $knex = knex(knexConfig);
-
-export function initDB() {
-  Model.knex($knex);
+export async function initDB() {
+  // (async () => {
+  const connection = await AppDataSource.initialize();
+  await connection.undoLastMigration();
+  await connection.runMigrations({
+    transaction: 'none'
+  });
+  // await connection.destroy();
+  // })();
 }
 
 export async function refreshDB() {
-  initDB();
-  await $knex.migrate.rollback();
-  await $knex.migrate.latest();
+  await initDB();
 }
 
 export async function initUser() {
