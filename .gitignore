@@ -13,6 +13,7 @@ yarn.lock
 /data/certbot/conf/*
 /data/certbot/dhparam/*
 /data/certbot/logs/*
+/src/database/database.sqlite
 
 !/data/dumps/.gitkeep
 !/data/mysql/.gitkeep

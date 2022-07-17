@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
-if (process.env.NODE_ENV == 'testing') {
-  dotenv.config({ path: '.env.testing' });
+if (process.env.NODE_ENV == 'test') {
+  dotenv.config({ path: '.env.test' });
 } else {
   dotenv.config();
 }
