@@ -8,7 +8,7 @@
 
 - Good ol' [Express](https://expressjs.com/).
 - Type-safety ([TypeScript](https://www.typescriptlang.org/)).
-- ORM with migration ([TypeORM](https://typeorm.io/).
+- ORM with migration ([TypeORM])(https://typeorm.io/).
 - Session-based and Token-based Authentication ([Passport](http://www.passportjs.org/)).
 - Templating ([EJS](https://ejs.co/)).
 - Utility-first CSS framework ([Tailwind](https://tailwindcss.com/) [via CDN]).
