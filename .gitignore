@@ -4,7 +4,6 @@ npm-debug.log
 yarn-error.log
 /dist
 /logs
-yarn.lock
 .DS_Store
 
 /data/dumps/*

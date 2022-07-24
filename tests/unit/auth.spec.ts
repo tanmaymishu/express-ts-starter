@@ -1,5 +1,4 @@
 import { User } from '../../src/database/sql/entities/user.entity';
-import { expect } from 'chai';
 import Container from 'typedi';
 import AuthService from '../../src/services/auth.service';
 
@@ -12,7 +11,7 @@ describe('auth', () => {
       user.email = 'john@example.com';
       user.password = 'password';
       user.id = 1;
-      expect(Container.get(AuthService).generateJwt(user)).to.be.a('string');
+      expect(Container.get(AuthService).generateJwt(user)).toBeDefined();
     });
   });
 });
