@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/9950313?s=50&v=4">
-  <h3 align="center">NodeJS + TypeScript</h3>
+  <img src="https://miro.medium.com/max/1400/1*xu6sBN2e6ExZS68FS83hgQ.png">
+  <h3 align="center">Express + TypeScript</h3>
   <p align="center">[A Starter Template]</p>
 </p>
 
