@@ -1,11 +1,11 @@
-import { User } from '../database/sql/entities/user.entity';
+import { User } from '@/database/sql/entities/user.entity';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { mailQueue } from '../queues/mail';
-import SendWelcomeEmail from '../jobs/send-welcome-email';
+import { mailQueue } from '@/queues/mail';
+import SendWelcomeEmail from '@/jobs/send-welcome-email';
 import { Request } from 'express';
 import { Service } from 'typedi';
-import { AppDataSource } from '../database/sql/data-source';
+import { AppDataSource } from '@/database/sql/data-source';
 @Service()
 export default class AuthService {
   async createUser(body: any) {

@@ -1,5 +1,5 @@
 import { connect } from 'mongoose';
-import { AppDataSource } from '../database/sql/data-source';
+import { AppDataSource } from '@/database/sql/data-source';
 import ServiceProvider from './service-provider';
 
 export default class DatabaseServiceProvider extends ServiceProvider {

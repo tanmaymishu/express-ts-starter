@@ -1,17 +1,8 @@
 import { Request, Response } from 'express';
 import passport from 'passport';
-import {
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Render,
-  Req,
-  Res,
-  UseBefore
-} from 'routing-controllers';
+import { Controller, Delete, Get, Post, Render, Req, Res, UseBefore } from 'routing-controllers';
 import { Service } from 'typedi';
-import auth from '../middleware/auth.middleware';
+import auth from '@/middleware/auth.middleware';
 
 @Controller()
 @Service()

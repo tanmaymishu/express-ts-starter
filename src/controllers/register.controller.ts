@@ -1,18 +1,11 @@
 import { Request, Response } from 'express';
 import { body } from 'express-validator';
-import {
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseBefore
-} from 'routing-controllers';
-import { User } from '../database/sql/entities/user.entity';
+import { Controller, Get, Post, Req, Res, UseBefore } from 'routing-controllers';
+import { User } from '@/database/sql/entities/user.entity';
 import { Service } from 'typedi';
-import auth from '../middleware/auth.middleware';
-import validate from '../middleware/validation.middleware';
-import AuthService from '../services/auth.service';
+import auth from '@/middleware/auth.middleware';
+import validate from '@/middleware/validation.middleware';
+import AuthService from '@/services/auth.service';
 
 @Controller()
 @Service()

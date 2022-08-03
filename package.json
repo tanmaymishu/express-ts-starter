@@ -1,21 +1,21 @@
 {
-  "name": "nodejs-starter-ts",
+  "name": "express-ts-starter",
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "Tanmay Mishu <tanmaymishu@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cp .env.example .env && npm run migrate",
+    "postinstall": "if [ -e .env ]; then echo \".env exists\"; else echo \".env not found, copying .env.example\"; cp .env.example .env;  fi && npm run migrate",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc && cp -R src/views dist/views",
-    "dev": "nodemon --exec ts-node src/index.ts",
-    "test": "jest",
-    "start": "NODE_ENV=production tsc && cp -R src/views dist/views && node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "test": "export NODE_ENV=test && jest",
+    "start": "export NODE_ENV=production && tsc && TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/index.js",
     "fmt": "prettier --config .prettierrc 'src/**/*.ts' 'tests/**/*.ts' --write",
     "entity:make": "cd src/database/sql/entities/ && typeorm-ts-node-commonjs entity:create",
     "migrate:make": "cd src/database/sql/migrations/ && typeorm-ts-node-commonjs migration:create",
-    "migrate": "NODE_ENV=development typeorm-ts-node-commonjs migration:run -d src/database/sql/data-source.ts",
-    "migrate:rollback": "NODE_ENV=development typeorm-ts-node-commonjs migration:revert -d src/database/sql/data-source.ts"
+    "migrate": "export NODE_ENV=development && typeorm-ts-node-commonjs migration:run -d src/database/sql/data-source.ts",
+    "migrate:rollback": "export NODE_ENV=development && typeorm-ts-node-commonjs migration:revert -d src/database/sql/data-source.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

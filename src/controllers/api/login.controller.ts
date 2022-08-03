@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Controller, Post, Req, Res, UseBefore } from 'routing-controllers';
 import { Service } from 'typedi';
-import validate from '../../middleware/validation.middleware';
-import AuthService from '../../services/auth.service';
+import validate from '@/middleware/validation.middleware';
+import AuthService from '@/services/auth.service';
 
 @Controller('/api/v1')
 @Service()
@@ -25,9 +25,7 @@ export class LoginController {
         return res.json({ user });
       })
       .catch((err) => {
-        return res
-          .status(422)
-          .json({ message: 'Invalid username or password' });
+        return res.status(422).json({ message: 'Invalid username or password' });
       });
   }
 }

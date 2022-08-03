@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import Authenticatable from '../../authenticatable';
+import Authenticatable from '@/database/authenticatable';
 
 export interface UserInput {
   email: string;
@@ -60,9 +60,7 @@ userSchema.pre('save', async function (this: IUser, next: any) {
 });
 
 // Compare a candidate password with the user's password
-userSchema.methods.comparePassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   // So we don't have to pass this into the interface method
   const user = this as IUser;
 

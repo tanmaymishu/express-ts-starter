@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Controller, Get, Req, Res } from 'routing-controllers';
-import { User } from '../../database/sql/entities/user.entity';
+import { User } from '@/database/sql/entities/user.entity';
 
 @Controller('/api/v1')
 export class UserController {

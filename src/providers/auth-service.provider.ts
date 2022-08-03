@@ -4,7 +4,7 @@ import PassportLocal from 'passport-local';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { Request } from 'express';
-import { User } from '../database/sql/entities/user.entity';
+import { User } from '@/database/sql/entities/user.entity';
 
 export default class AuthServiceProvider extends ServiceProvider {
   async register() {
@@ -16,16 +16,13 @@ export default class AuthServiceProvider extends ServiceProvider {
       passwordField: 'password'
     };
     const LocalStrategy = PassportLocal.Strategy;
-    const localStrategy = new LocalStrategy(
-      customFields,
-      async (username, password, done) => {
-        const user = await User.findOneBy({ email: username });
-        if (user && bcrypt.compareSync(password, user.password)) {
-          return done(null, user);
-        }
-        return done(null, false);
+    const localStrategy = new LocalStrategy(customFields, async (username, password, done) => {
+      const user = await User.findOneBy({ email: username });
+      if (user && bcrypt.compareSync(password, user.password)) {
+        return done(null, user);
       }
-    );
+      return done(null, false);
+    });
 
     passport.use(localStrategy);
 

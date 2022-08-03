@@ -1,5 +1,5 @@
-import { User } from '../database/sql/entities/user.entity';
-import { transporter } from '../util/mailer';
+import { User } from '@/database/sql/entities/user.entity';
+import { transporter } from '@/util/mailer';
 
 export default class SendWelcomeEmail {
   static jobName = 'sendWelcomeEmail';

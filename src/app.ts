@@ -12,14 +12,14 @@ import methodOverride from 'method-override';
 import csrf from 'csurf';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import './util/helpers';
+import '@/util/helpers';
 import multer from 'multer';
-import morganLogger from './middleware/morgan.middleware';
+import morganLogger from '@/middleware/morgan.middleware';
 
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
-import { mailQueue } from './queues/mail';
+import { mailQueue } from '@/queues/mail';
 import path from 'path';
 
 import IORedis from 'ioredis';
@@ -28,21 +28,14 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import passport from 'passport';
 import Container from 'typedi';
-import AppServiceProvider from './providers/app-service.provider';
-import AuthServiceProvider from './providers/auth-service.provider';
-import DatabaseServiceProvider from './providers/database-service.provider';
+import AppServiceProvider from '@/providers/app-service.provider';
+import AuthServiceProvider from '@/providers/auth-service.provider';
+import DatabaseServiceProvider from '@/providers/database-service.provider';
 
-const providers = [
-  AppServiceProvider,
-  DatabaseServiceProvider,
-  AuthServiceProvider
-];
+const providers = [AppServiceProvider, DatabaseServiceProvider, AuthServiceProvider];
 providers.forEach((provider) => new provider().register());
 
-const redisClient = new IORedis(
-  parseInt(<string>process.env.REDIS_PORT),
-  process.env.REDIS_HOST
-);
+const redisClient = new IORedis(parseInt(<string>process.env.REDIS_PORT), process.env.REDIS_HOST);
 const RedisStore = connectRedis(session);
 
 // Create an express app.
@@ -74,9 +67,7 @@ app.use(
   // Add custom helpers to request object
   (req, res, next) => {
     req.wantsJson = () => {
-      return (
-        req.accepts()[0].includes('/json') || req.accepts()[0].includes('+json')
-      );
+      return req.accepts()[0].includes('/json') || req.accepts()[0].includes('+json');
     };
     next();
   },
@@ -160,12 +151,7 @@ useExpressServer(app, {
 });
 
 // Catch any error and send it as a json.
-app.use(function (
-  error: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {
   if (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });

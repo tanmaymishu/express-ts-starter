@@ -1,5 +1,5 @@
 import { Job, Queue, Worker } from 'bullmq';
-import { mailJobs } from '../jobs/mail-jobs';
+import { mailJobs } from '@/jobs/mail-jobs';
 
 const mailQueue = new Queue('mail', {
   connection: {
