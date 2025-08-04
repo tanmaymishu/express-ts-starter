@@ -1,5 +1,4 @@
 import request from 'supertest';
-import Container from 'typedi';
 import app from '../../src/app';
 import { refreshDB, initUser } from '../bootstrap';
 

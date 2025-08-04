@@ -1,4 +1,4 @@
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 export {};
 type envFunc = <T>(...args: any) => T;
 
@@ -17,13 +17,13 @@ declare global {
   }
 }
 
-global.JSON_REQ = 'application/json';
+(global as any).JSON_REQ = 'application/json';
 
-global.toTimeStamp = (date: Date) => {
+(global as any).toTimeStamp = (date: Date) => {
   return format(date, 'yyyy-MM-dd HH:mm:ss');
 };
 
-global.env = <T>(...args: any): T => {
+(global as any).env = <T>(...args: any): T => {
   if (args[1] != undefined) {
     process.env[args[0]] = args[1];
   }

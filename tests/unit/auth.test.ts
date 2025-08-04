@@ -1,4 +1,4 @@
-import { User } from '../../src/database/sql/entities/user.entity';
+import { User } from '@/database/sql/entities/user.entity';
 import Container from 'typedi';
 import AuthService from '../../src/services/auth.service';
 

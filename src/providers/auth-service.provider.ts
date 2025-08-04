@@ -33,11 +33,11 @@ export default class AuthServiceProvider extends ServiceProvider {
         if (req && req.cookies) token = req.cookies['jwt'];
         return token;
       },
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: process.env.JWT_SECRET!,
       issuer: 'api.example.com',
       audience: 'app.example.com'
     };
-    const jwtStrategy = new JwtStrategy(opts, async function (payload, done) {
+    const jwtStrategy = new JwtStrategy(opts, async function (payload: any, done: any) {
       if (Date.now() > payload.exp) {
         return done(null, false);
       }

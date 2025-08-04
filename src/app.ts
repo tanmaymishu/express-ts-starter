@@ -9,7 +9,7 @@ import 'reflect-metadata';
 import { useContainer, useExpressServer } from 'routing-controllers';
 import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
-import csrf from 'csurf';
+import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import '@/util/helpers';
@@ -35,7 +35,10 @@ import DatabaseServiceProvider from '@/providers/database-service.provider';
 const providers = [AppServiceProvider, DatabaseServiceProvider, AuthServiceProvider];
 providers.forEach((provider) => new provider().register());
 
-const redisClient = new IORedis(parseInt(<string>process.env.REDIS_PORT), process.env.REDIS_HOST);
+const redisClient = new IORedis({
+  port: parseInt(process.env.REDIS_PORT || '6379'),
+  host: process.env.REDIS_HOST || 'localhost'
+});
 const RedisStore = connectRedis(session);
 
 // Create an express app.
@@ -103,35 +106,38 @@ app.get('/', (req, res, next) => {
   return res.json({ message: 'Home, Sweet Home.' });
 });
 
-// Register CSRF.
-app.use(
-  '/',
-  (req, res, next) => {
-    if (req.path.startsWith('/api/')) {
-      next();
-    } else {
-      return csrf()(req, res, next);
-    }
-  },
-  (req, res, next) => {
-    if (req.path.startsWith('/api/')) {
-      next();
-    } else {
-      res.locals._token = req.csrfToken();
-      next();
-    }
-  }
-);
+// Add rate limiting for API endpoints
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
-// Set up queue monitoring route.
+app.use('/api/', limiter);
+
+// Authentication rate limiting
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs for auth endpoints
+  message: 'Too many authentication attempts, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api/v1/login', authLimiter);
+app.use('/api/v1/register', authLimiter);
+
+// Set up queue monitoring route with BullBoard v6
 const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath('/admin/queues');
 
-const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
+createBullBoard({
   queues: [new BullMQAdapter(mailQueue)],
   serverAdapter: serverAdapter
 });
 
-serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // Add views
@@ -172,3 +178,4 @@ app.use(function (req: Request, res: Response) {
 });
 
 export default app;
+export { redisClient };
