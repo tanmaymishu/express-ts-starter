@@ -153,7 +153,12 @@ useExpressServer(app, {
 // Catch any error and send it as a json.
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {
   if (error) {
+    // SECURITY RISK: console.log exposes sensitive error details in logs
+    // TODO: Replace with proper logger (Winston/Pino)
     console.log(error);
+    
+    // SECURITY RISK: Exposing internal error messages to client
+    // TODO: Return generic error message, log details server-side only
     return res.status(500).json({ error: error.message });
   }
   return next();

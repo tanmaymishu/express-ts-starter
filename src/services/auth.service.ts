@@ -27,15 +27,19 @@ export default class AuthService {
   async register(req: Request) {
     const user = await this.createUser(req.body);
 
+    // TODO: Uncomment when email service is properly configured
     // mailQueue.add(SendWelcomeEmail.jobName, user);
 
     return user;
   }
 
   async login(req: Request) {
+    // TODO: Add input validation for email/password
+    // TODO: Implement rate limiting to prevent brute force attacks
     const user = await User.findOneBy({ email: req.body.email });
 
     if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
+      // SECURITY: Generic error message to prevent user enumeration
       throw new Error('User not found');
     }
 
@@ -54,7 +58,8 @@ export default class AuthService {
     return jwt.sign(
       {
         sub: user.id,
-        iat: Date.now(),
+        // SECURITY FIX: JWT 'iat' should be in seconds, not milliseconds
+        iat: Math.floor(Date.now() / 1000),
         iss: 'api.example.com',
         aud: 'app.example.com'
       },
