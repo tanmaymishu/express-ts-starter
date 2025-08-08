@@ -101,10 +101,7 @@ app.use(cors());
 // Log the incoming requests to console.
 app.use(morganLogger);
 
-// Example route.
-app.get('/', (req, res, next) => {
-  return res.json({ message: 'Home, Sweet Home.' });
-});
+// Home route moved to HomeController
 
 // Add rate limiting for API endpoints
 const limiter = rateLimit({
@@ -150,10 +147,10 @@ useContainer(Container);
 
 useExpressServer(app, {
   controllers: [path.join(__dirname, '/controllers/**/*.controller.*')],
-  defaultErrorHandler: false
-  // middlewares: [
-  //   path.join(__dirname, '/middleware/global/*.middleware.ts')
-  // ]
+  defaultErrorHandler: false,
+  middlewares: [
+    path.join(__dirname, '/middleware/global/*.middleware.*')
+  ]
 });
 
 // Catch any error and send it as a json.
@@ -162,7 +159,7 @@ app.use(function (error: Error, req: Request, res: Response, next: NextFunction)
     // SECURITY RISK: console.log exposes sensitive error details in logs
     // TODO: Replace with proper logger (Winston/Pino)
     console.log(error);
-    
+
     // SECURITY RISK: Exposing internal error messages to client
     // TODO: Return generic error message, log details server-side only
     return res.status(500).json({ error: error.message });
