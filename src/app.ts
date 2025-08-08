@@ -11,6 +11,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import methodOverride from 'method-override';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
+import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import '@/util/helpers';
 import multer from 'multer';
@@ -43,6 +44,9 @@ const RedisStore = connectRedis(session);
 
 // Create an express app.
 const app = express();
+
+// Security headers with Helmet
+app.use(helmet());
 
 // Make req.cookies accessible
 app.use(cookieParser());
