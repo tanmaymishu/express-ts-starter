@@ -16,6 +16,7 @@ import cookieParser from 'cookie-parser';
 import '@/util/helpers';
 import multer from 'multer';
 import morganLogger from '@/middleware/morgan.middleware';
+import logger from '@/util/logger';
 
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
@@ -157,16 +158,26 @@ useExpressServer(app, {
   ]
 });
 
-// Catch any error and send it as a json.
+// Global error handling middleware
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {
   if (error) {
-    // SECURITY RISK: console.log exposes sensitive error details in logs
-    // TODO: Replace with proper logger (Winston/Pino)
-    console.log(error);
+    // Log error details securely using Winston
+    logger.error(`${req.method} ${req.path} - ${error.name}: ${error.message}`, {
+      stack: error.stack,
+      url: req.url,
+      method: req.method,
+      ip: req.ip,
+      userAgent: req.get('User-Agent')
+    });
 
-    // SECURITY RISK: Exposing internal error messages to client
-    // TODO: Return generic error message, log details server-side only
-    return res.status(500).json({ error: error.message });
+    // Return error message based on APP_DEBUG setting
+    const isDebugMode = process.env.APP_DEBUG === 'true';
+    const errorResponse = {
+      error: isDebugMode ? error.message : 'Server Error',
+      ...(isDebugMode && { stack: error.stack })
+    };
+
+    return res.status(500).json(errorResponse);
   }
   return next();
 });

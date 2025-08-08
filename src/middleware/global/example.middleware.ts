@@ -5,11 +5,11 @@ import { Service } from 'typedi';
 @Middleware({ type: 'before' })
 export class ExampleMiddleware implements ExpressMiddlewareInterface {
   constructor() {
-    console.log('ExampleMiddleware loaded!');
+    // console.log('ExampleMiddleware loaded!');
   }
 
   use(request: any, response: any, next: (err?: any) => any): void {
-    console.log('ExampleMiddleware Called!');
+    // console.log('ExampleMiddleware Called!');
     next(); // Call next() with no arguments (or err) to continue
   }
 }
